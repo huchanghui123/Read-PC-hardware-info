@@ -12,5 +12,5 @@ Read Computer hardware information
 
 软件界面：
 
-![info](/zdisk/github_pro/Read-PC-hardware-info/bin/Debug/test.png)
+![info](./bin/Debug/test.png)
 
