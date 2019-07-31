@@ -6,6 +6,10 @@ Read Computer hardware information
 
 开发环境：Visual Studio2017 
 
+
+
+源程序：/bin/Debug/PCINFO.exe
+
 软件界面：
 
 ![info](/zdisk/github_pro/Read-PC-hardware-info/bin/Debug/test.png)
