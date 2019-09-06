@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PCINFO
+namespace OpenPCINFO
 {
     class MemInfo
     {
@@ -14,10 +14,11 @@ namespace PCINFO
         public MemInfo(string name, int speed, int type, double size)
         {
             this.name = name;
-            this.size = size;
-            this.type = type;
             this.speed = speed;
+            this.type = type;
+            this.size = size;
         }
     }
-    
+
+
 }

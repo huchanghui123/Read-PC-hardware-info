@@ -8,7 +8,7 @@ Read Computer hardware information
 
 
 
-源程序：/bin/Debug/PCINFO.exe
+源程序：/bin/Debug/OpenPCINFO.exe
 
 软件界面：
 

@@ -4,15 +4,29 @@ using System.Text;
 using System.Management;
 using System.Collections;
 
-namespace PCINFO
+
+namespace OpenPCINFO
 {
     class PC
     {
-        public static uint Init()
+        public static string GetSystemType()
         {
-            uint result = 0;
-
-            return result;
+            try
+            {
+                var st = string.Empty;
+                var mos = new ManagementObjectSearcher("Select * from Win32_ComputerSystem");
+                foreach (var o in mos.Get())
+                {
+                    var mo = (ManagementObject)o;
+                    st = mo["SystemType"].ToString();
+                }
+                mos.Dispose();
+                return st;
+            }
+            catch (Exception)
+            {
+                return "unknow";
+            }
         }
 
         public static string GetSystemVersion()
@@ -20,64 +34,23 @@ namespace PCINFO
             try
             {
                 var os_version = string.Empty;
-                var driveId = new ManagementObjectSearcher("Select * from Win32_OperatingSystem");
-                foreach (var o in driveId.Get())
+                var mos = new ManagementObjectSearcher("Select * from Win32_OperatingSystem");
+                foreach (var o in mos.Get())
                 {
                     var mo = (ManagementObject)o;
                     os_version += mo["Caption"].ToString() + " ";
                     os_version += mo["Version"].ToString();
                 }
-                Console.WriteLine(os_version);
+                mos.Dispose();
                 return os_version;
             }
             catch (Exception)
             {
                 return "unknow";
             }
-            
-        }
-
-        public static string GetSystemType()
-        {
-            try
-            {
-                var st = string.Empty;
-                var driveId = new ManagementObjectSearcher("Select * from Win32_ComputerSystem");
-                foreach (var o in driveId.Get())
-                {
-                    var mo = (ManagementObject)o;
-                    st = mo["SystemType"].ToString();
-                }
-                return st;
-            }
-            catch (Exception)
-            {
-                return "unknow";
-            }
-            
         }
 
         public static string GetCpuName()
-        {
-            try
-            {
-                var st = string.Empty;
-                var driveId = new ManagementObjectSearcher("Select * from Win32_Processor");
-                foreach (var o in driveId.Get())
-                {
-                    var mo = (ManagementObject)o;
-                    st = mo["Name"].ToString();
-                }
-                return st;
-            }
-            catch (Exception)
-            {
-                return "unknow";
-            }
-            
-        }
-
-        public static string GetCpuManufacturer()
         {
             try
             {
@@ -86,15 +59,62 @@ namespace PCINFO
                 foreach (var o in mos.Get())
                 {
                     var mo = (ManagementObject)o;
-                    st = mo["Manufacturer"].ToString();
+                    st = mo["Name"].ToString();
                 }
+                mos.Dispose();
                 return st;
             }
             catch (Exception)
             {
                 return "unknow";
             }
-            
+        }
+
+        public static string GetBoardType()
+        {
+            try
+            {
+                var st = string.Empty;
+                var mos = new ManagementObjectSearcher("Select * from Win32_BaseBoard");
+                foreach (var o in mos.Get())
+                {
+                    var mo = (ManagementObject)o;
+                    st = mo["Product"].ToString();
+                }
+                mos.Dispose();
+                return st;
+            }
+
+            catch (Exception)
+            {
+                return "unknow";
+            }
+        }
+
+        public static string GetBios()
+        {
+            try
+            {
+                ManagementClass mc = new ManagementClass("Win32_BIOS");
+                ManagementObjectCollection moc = mc.GetInstances();
+                string strID = null;
+                foreach (ManagementObject mo in moc)
+                {
+                    strID += mo.Properties["Manufacturer"].Value.ToString() + " ";
+                    //strID += mo.Properties["Version"].Value.ToString() + " ";
+                    strID += mo.Properties["Name"].Value.ToString() + " ";
+                    string data = mo.Properties["ReleaseDate"].Value.ToString().Substring(0, 8);
+                    strID += DateTime.ParseExact(data, "yyyyMMdd", null).ToString("yyyy/MM/dd") + " ";
+
+                }
+                mc = null;
+                moc.Dispose();
+                return strID;
+            }
+            catch (Exception)
+            {
+                return "unknow";
+            }
         }
 
         public static ArrayList GetMemeryInfo()
@@ -119,7 +139,6 @@ namespace PCINFO
             {
                 return null;
             }
-            
         }
 
         public static ArrayList GetDiskInfo()
@@ -145,53 +164,6 @@ namespace PCINFO
             {
                 return null;
             }
-            
-        }
-
-        public static string GetBoardType()
-        {
-            try
-            {
-                var st = string.Empty;
-                var mos = new ManagementObjectSearcher("Select * from Win32_BaseBoard");
-                foreach (var o in mos.Get())
-                {
-                    var mo = (ManagementObject)o;
-                    st = mo["Product"].ToString();
-                }
-                return st;
-            }
-            catch (Exception)
-            {
-                return "unknow";
-            }
-            
-        }
-
-        public static string GetBiosInfo()
-        {
-            try
-            {
-                ManagementClass mc = new ManagementClass("Win32_BIOS");
-                ManagementObjectCollection moc = mc.GetInstances();
-                string strID = null;
-                foreach (ManagementObject mo in moc)
-                {
-                    string data = mo.Properties["ReleaseDate"].Value.ToString().Substring(0, 8);
-                    strID += mo.Properties["Manufacturer"].Value.ToString() + " ";
-                    strID += mo.Properties["Name"].Value.ToString() + " ";
-                    strID += DateTime.ParseExact(data, "yyyyMMdd", null).ToString("yyyy/MM/dd");
-                }
-                mc = null;
-                moc.Dispose();
-                
-                return strID;
-            }
-            catch (Exception)
-            {
-                return "unknow";
-            }
-            
         }
 
         public static ArrayList getNetWorkInfo()
@@ -209,12 +181,11 @@ namespace PCINFO
                         {
                             net_list.Add(new NetWorkInfo(
                                 m.Properties["Name"].Value.ToString(),
-                                m.Properties["Manufacturer"].Value.ToString(),
+                                //m.Properties["Manufacturer"].Value.ToString(),
                                 m.Properties["MACAddress"].Value.ToString()
                                 ));
                         }
                     }
-
                 }
                 mc = null;
                 moc.Dispose();
@@ -224,7 +195,7 @@ namespace PCINFO
             {
                 return null;
             }
-            
         }
     }
+
 }

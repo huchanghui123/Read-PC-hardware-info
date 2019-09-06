@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PCINFO
+namespace OpenPCINFO
 {
     class NetWorkInfo
     {
         public string name;
         public string manufacturer;
         public string mac;
-        
+
+        public NetWorkInfo(string name, string mac)
+        {
+            this.name = name;
+            this.mac = mac;
+        }
 
         public NetWorkInfo(string name, string manufacturer, string mac)
         {
@@ -18,7 +23,4 @@ namespace PCINFO
             this.mac = mac;
         }
     }
-
-    
-
 }
