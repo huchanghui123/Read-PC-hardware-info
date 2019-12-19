@@ -1,0 +1,12 @@
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\bin\Release\OpenPCINFO.exe.config
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\bin\Release\OpenPCINFO.exe
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\bin\Release\OpenPCINFO.pdb
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\bin\Release\OpenHardwareMonitorLib.dll
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.PCINFO.resources
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.Properties.Resources.resources
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.csproj.GenerateResource.cache
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.csproj.CoreCompileInputs.cache
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.csproj.CopyComplete
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.exe
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.pdb
+E:\Visual Studio\C#\OpenPcInfo\OpenPCINFO\obj\Release\OpenPCINFO.csprojAssemblyReference.cache
