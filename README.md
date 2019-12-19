@@ -13,6 +13,5 @@ Read Computer hardware information
 程序默认以管理员权限运行。
 
 软件界面：
-
 ![info](./pcinfo_screen.png)
 
