@@ -47,7 +47,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tempList = new OpenPCINFO.ListViewNF();
-            //this.tempList = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // os
@@ -66,7 +65,7 @@
             this.osBox.Location = new System.Drawing.Point(100, 6);
             this.osBox.Name = "osBox";
             this.osBox.ReadOnly = true;
-            this.osBox.Size = new System.Drawing.Size(452, 21);
+            this.osBox.Size = new System.Drawing.Size(472, 21);
             this.osBox.TabIndex = 1;
             // 
             // cpuBox
@@ -75,7 +74,7 @@
             this.cpuBox.Location = new System.Drawing.Point(100, 34);
             this.cpuBox.Name = "cpuBox";
             this.cpuBox.ReadOnly = true;
-            this.cpuBox.Size = new System.Drawing.Size(452, 21);
+            this.cpuBox.Size = new System.Drawing.Size(472, 21);
             this.cpuBox.TabIndex = 2;
             // 
             // cpu
@@ -93,7 +92,7 @@
             this.mainBoardBox.Location = new System.Drawing.Point(100, 62);
             this.mainBoardBox.Name = "mainBoardBox";
             this.mainBoardBox.ReadOnly = true;
-            this.mainBoardBox.Size = new System.Drawing.Size(452, 21);
+            this.mainBoardBox.Size = new System.Drawing.Size(472, 21);
             this.mainBoardBox.TabIndex = 4;
             // 
             // mainBroad
@@ -111,7 +110,7 @@
             this.biosBox.Location = new System.Drawing.Point(100, 90);
             this.biosBox.Name = "biosBox";
             this.biosBox.ReadOnly = true;
-            this.biosBox.Size = new System.Drawing.Size(452, 21);
+            this.biosBox.Size = new System.Drawing.Size(472, 21);
             this.biosBox.TabIndex = 6;
             // 
             // bios
@@ -137,7 +136,7 @@
             this.ramList.HideSelection = false;
             this.ramList.Location = new System.Drawing.Point(100, 235);
             this.ramList.Name = "ramList";
-            this.ramList.Size = new System.Drawing.Size(452, 100);
+            this.ramList.Size = new System.Drawing.Size(472, 100);
             this.ramList.TabIndex = 10;
             this.ramList.UseCompatibleStateImageBehavior = false;
             // 
@@ -155,7 +154,7 @@
             this.diskList.HideSelection = false;
             this.diskList.Location = new System.Drawing.Point(100, 342);
             this.diskList.Name = "diskList";
-            this.diskList.Size = new System.Drawing.Size(452, 100);
+            this.diskList.Size = new System.Drawing.Size(472, 100);
             this.diskList.TabIndex = 12;
             this.diskList.UseCompatibleStateImageBehavior = false;
             // 
@@ -173,7 +172,7 @@
             this.netList.HideSelection = false;
             this.netList.Location = new System.Drawing.Point(100, 449);
             this.netList.Name = "netList";
-            this.netList.Size = new System.Drawing.Size(452, 150);
+            this.netList.Size = new System.Drawing.Size(472, 150);
             this.netList.TabIndex = 14;
             this.netList.UseCompatibleStateImageBehavior = false;
             // 
@@ -196,7 +195,7 @@
             this.tempList.HideSelection = false;
             this.tempList.Location = new System.Drawing.Point(100, 118);
             this.tempList.Name = "tempList";
-            this.tempList.Size = new System.Drawing.Size(452, 110);
+            this.tempList.Size = new System.Drawing.Size(472, 110);
             this.tempList.TabIndex = 8;
             this.tempList.UseCompatibleStateImageBehavior = false;
             // 
@@ -204,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 611);
+            this.ClientSize = new System.Drawing.Size(584, 611);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.netList);
             this.Controls.Add(this.disk);
@@ -226,6 +225,7 @@
             this.MaximizeBox = false;
             this.Name = "PCINFO";
             this.Text = "PCINFO V2.0";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Pcinfo_FormClosed);
             this.Load += new System.EventHandler(this.Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace OpenPCINFO
@@ -12,9 +13,41 @@ namespace OpenPCINFO
         [STAThread]
         static void Main()
         {
+            if (!AllRequiredFilesAvailable())
+                Environment.Exit(0);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PCINFO());
+
+            PCINFO form = new PCINFO();
+            form.FormClosed += delegate (Object sender, FormClosedEventArgs e) {
+                Application.Exit();
+            };
+            Application.Run(form);
+            
+        }
+
+        private static bool IsFileAvailable(string fileName)
+        {
+            string path = Path.GetDirectoryName(Application.ExecutablePath) +
+              Path.DirectorySeparatorChar;
+
+            if (!File.Exists(path + fileName))
+            {
+                MessageBox.Show("找不到以下文件: " + fileName +
+                  "\n请将该文件与程序放在同一路径.", "Error",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private static bool AllRequiredFilesAvailable()
+        {
+            if (!IsFileAvailable("OpenHardwareMonitorLib.dll"))
+                return false;
+
+            return true;
         }
     }
 }

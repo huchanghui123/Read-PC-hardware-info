@@ -5,6 +5,7 @@ using System.Management;
 using System.Collections;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace OpenPCINFO
 {
@@ -186,7 +187,8 @@ namespace OpenPCINFO
                         {
                             Name = m.Properties["Name"].Value.ToString();
                             MACAddress = m.Properties["MACAddress"].Value.ToString();
-                            net_list.Add(new NetWorkInfo(Name, MACAddress));
+                            //net_list.Add(new NetWorkInfo(Name, MACAddress));
+                            Console.WriteLine("Name:"+ Name+ " MACAddress:"+ MACAddress);
                         }
 
                     }
@@ -212,11 +214,14 @@ namespace OpenPCINFO
             NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in adapters)
             {
-                Name = adapter.Name;
-                Mac = adapter.GetPhysicalAddress().ToString();
+                //Name = adapter.Name;
+                Name = adapter.Description;
+                Mac = BitConverter.ToString(adapter.GetPhysicalAddress().GetAddressBytes());
                 NetSpeed = adapter.Speed;
                 NetType = adapter.NetworkInterfaceType.ToString();
-                if (Mac == string.Empty)
+                //Console.WriteLine("Name:"+ Name+" OperationalStatus:" + adapter.OperationalStatus);
+                //String temp = string.Join(":", (from z in adapter.GetPhysicalAddress().GetAddressBytes() select z.ToString("X2")).ToArray());
+                if (Mac == string.Empty || Name.Contains("Microsoft"))//屏蔽系统创建的虚拟无线网卡
                 {
                     continue;
                 }
@@ -230,7 +235,6 @@ namespace OpenPCINFO
                             IPAddress = item.Address.ToString();
                             NetWorkInfo netwotk = new NetWorkInfo(Name, IPAddress, Mac, NetSpeed, NetType);
                             net_list.Add(netwotk);
-                            //Console.WriteLine(netwotk.ToString());
                         }
                     }
                 }

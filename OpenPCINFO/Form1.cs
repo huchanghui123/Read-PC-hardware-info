@@ -19,7 +19,6 @@ namespace OpenPCINFO
         public PCINFO()
         {
             InitializeComponent();
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(Form_Closing);
             NetworkChange.NetworkAvailabilityChanged += 
                 new NetworkAvailabilityChangedEventHandler(Networkchanged);
         }
@@ -54,6 +53,7 @@ namespace OpenPCINFO
             Console.WriteLine("BIOS:" + bios);
 
             cpuCelsius = new CpuTemperatureReader();
+
         }
 
          private void GetCpuTemperatures()
@@ -169,12 +169,12 @@ namespace OpenPCINFO
         {
             diskList.GridLines = true;
             diskList.View = View.Details;
-            this.diskList.Columns.Add("型号", -2, HorizontalAlignment.Left);
-            this.diskList.Columns.Add("类型", -2, HorizontalAlignment.Center);
-            this.diskList.Columns.Add("大小", -2, HorizontalAlignment.Center);
+            this.diskList.Columns.Add("磁盘型号", -2, HorizontalAlignment.Left);
+            this.diskList.Columns.Add("磁盘类型", -2, HorizontalAlignment.Center);
+            this.diskList.Columns.Add("磁盘大小", -2, HorizontalAlignment.Center);
 
-            this.diskList.Columns[0].Width = Convert.ToUInt16(0.6 * this.diskList.Width);
-            this.diskList.Columns[1].Width = Convert.ToUInt16(0.15 * this.diskList.Width);
+            this.diskList.Columns[0].Width = Convert.ToUInt16(0.55 * this.diskList.Width);
+            this.diskList.Columns[1].Width = Convert.ToUInt16(0.2 * this.diskList.Width);
             this.diskList.Columns[2].Width = Convert.ToUInt16(0.2 * this.diskList.Width);
 
             this.diskList.BeginUpdate();
@@ -199,14 +199,16 @@ namespace OpenPCINFO
             netList.GridLines = true;
             netList.View = View.Details;
             this.netList.Columns.Add("适配器", -2, HorizontalAlignment.Left);
+            this.netList.Columns.Add("MAC地址", -2, HorizontalAlignment.Left);
             this.netList.Columns.Add("IP地址", -2, HorizontalAlignment.Left);
             this.netList.Columns.Add("速度", -2, HorizontalAlignment.Left);
             this.netList.Columns.Add("类型", -2, HorizontalAlignment.Left);
 
-            this.netList.Columns[0].Width = Convert.ToUInt16(0.45 * this.netList.Width);
-            this.netList.Columns[1].Width = Convert.ToUInt16(0.23 * this.netList.Width);
-            this.netList.Columns[2].Width = Convert.ToUInt16(0.15 * this.netList.Width);
+            this.netList.Columns[0].Width = Convert.ToUInt16(0.4 * this.netList.Width);
+            this.netList.Columns[1].Width = Convert.ToUInt16(0.25 * this.netList.Width);
+            this.netList.Columns[2].Width = Convert.ToUInt16(0.22 * this.netList.Width);
             this.netList.Columns[3].Width = Convert.ToUInt16(0.15 * this.netList.Width);
+            this.netList.Columns[4].Width = Convert.ToUInt16(0.15 * this.netList.Width);
 
             this.netList.BeginUpdate();
             ArrayList net_info = PC.GetIPv4Address();
@@ -216,6 +218,7 @@ namespace OpenPCINFO
                 {
                     Text = net.name
                 };
+                net_item.SubItems.Add(net.mac);
                 net_item.SubItems.Add(net.ip);
                 if (net.speed <= 0)
                 {
@@ -258,13 +261,6 @@ namespace OpenPCINFO
             }
         }
 
-        private void Form_Closing(object sender, FormClosingEventArgs e)
-        {
-            timer1.Stop();
-            Console.WriteLine("windows close!!!");
-            System.Environment.Exit(0);
-        }
-
         private void Timer1_Tick(object sender, EventArgs e)
         {
             Invoke((EventHandler)(delegate
@@ -279,6 +275,11 @@ namespace OpenPCINFO
             UpdateNetWorkInfo(net_info);
         }
 
-
+        private void Pcinfo_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            timer1.Stop();
+            timer1.Enabled = false;
+            cpuCelsius.Dispose();
+        }
     }
 }
