@@ -136,7 +136,7 @@
             this.ramList.HideSelection = false;
             this.ramList.Location = new System.Drawing.Point(100, 235);
             this.ramList.Name = "ramList";
-            this.ramList.Size = new System.Drawing.Size(472, 100);
+            this.ramList.Size = new System.Drawing.Size(472, 77);
             this.ramList.TabIndex = 10;
             this.ramList.UseCompatibleStateImageBehavior = false;
             // 
@@ -152,16 +152,16 @@
             // diskList
             // 
             this.diskList.HideSelection = false;
-            this.diskList.Location = new System.Drawing.Point(100, 342);
+            this.diskList.Location = new System.Drawing.Point(100, 318);
             this.diskList.Name = "diskList";
-            this.diskList.Size = new System.Drawing.Size(472, 100);
+            this.diskList.Size = new System.Drawing.Size(472, 124);
             this.diskList.TabIndex = 12;
             this.diskList.UseCompatibleStateImageBehavior = false;
             // 
             // disk
             // 
             this.disk.AutoSize = true;
-            this.disk.Location = new System.Drawing.Point(29, 342);
+            this.disk.Location = new System.Drawing.Point(29, 318);
             this.disk.Name = "disk";
             this.disk.Size = new System.Drawing.Size(65, 12);
             this.disk.TabIndex = 13;

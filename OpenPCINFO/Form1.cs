@@ -173,8 +173,8 @@ namespace OpenPCINFO
             this.diskList.Columns.Add("磁盘类型", -2, HorizontalAlignment.Center);
             this.diskList.Columns.Add("磁盘大小", -2, HorizontalAlignment.Center);
 
-            this.diskList.Columns[0].Width = Convert.ToUInt16(0.55 * this.diskList.Width);
-            this.diskList.Columns[1].Width = Convert.ToUInt16(0.2 * this.diskList.Width);
+            this.diskList.Columns[0].Width = Convert.ToUInt16(0.6 * this.diskList.Width);
+            this.diskList.Columns[1].Width = Convert.ToUInt16(0.15 * this.diskList.Width);
             this.diskList.Columns[2].Width = Convert.ToUInt16(0.2 * this.diskList.Width);
 
             this.diskList.BeginUpdate();
