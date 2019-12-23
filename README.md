@@ -10,8 +10,9 @@ Read Computer hardware information
 
 源程序：/bin/Debug/OpenPCINFO.exe
 
-程序默认以管理员权限运行。
+程序默认以管理员权限运行
 
-软件界面：
+
+
 ![info](./pcinfo_screen.png)
 
