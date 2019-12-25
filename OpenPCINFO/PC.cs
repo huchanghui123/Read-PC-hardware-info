@@ -237,7 +237,6 @@ namespace OpenPCINFO
                             ping = Ping(IPAddress);
                             NetWorkInfo netwotk = new NetWorkInfo(Name, IPAddress, Mac, NetSpeed, ping, NetType);
                             net_list.Add(netwotk);
-                            //bool status = PC.Ping(IPAddress);
                         }
                     }
                 }

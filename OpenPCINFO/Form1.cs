@@ -15,12 +15,13 @@ namespace OpenPCINFO
     {
         public ListViewItem cpu_item = null;
         public ArrayList cpuTemper = null;
+        public ArrayList networkList = null;
         private CpuTemperatureReader cpuCelsius;
         public PCINFO()
         {
             InitializeComponent();
-            NetworkChange.NetworkAvailabilityChanged += 
-                new NetworkAvailabilityChangedEventHandler(Networkchanged);
+            NetworkChange.NetworkAddressChanged += new
+                NetworkAddressChangedEventHandler(AddressChangedCallback);
         }
 
         private void Form_Load(object sender, EventArgs e)
@@ -133,11 +134,11 @@ namespace OpenPCINFO
             int i = 0;
             foreach (Temperatures temperatures in cpuTemper)
             {
-                if (temperatures.value >= 45 && i != 4)
+                if (temperatures.value >= 50 && i != 4)
                 {
                     this.tempList.Items[i].ForeColor = Color.Red;
                 }
-                else if (temperatures.value >= 50 && i == 4)
+                else if (temperatures.value >= 60 && i == 4)
                 {
                     this.tempList.Items[i].ForeColor = Color.Red;
                 }
@@ -151,7 +152,6 @@ namespace OpenPCINFO
 
                 i++;
             }
-            
         }
 
         private void GetMemoryInfo()
@@ -249,8 +249,6 @@ namespace OpenPCINFO
             ArrayList net_info = PC.GetIPv4Address();
             foreach (NetWorkInfo net in net_info)
             {
-                //bool status = PC.Ping(net.ip);
-                //Console.WriteLine("ip status PING>>>" + status);
                 var net_item = new ListViewItem
                 {
                     Text = net.name
@@ -274,26 +272,29 @@ namespace OpenPCINFO
             this.netList.EndUpdate();
         }
 
-        private void UpdateNetWorkInfo(ArrayList list)
+        private void UpdateNetWorkInfo()
         {
+            networkList = PC.GetIPv4Address();
             int i = 0;
-            foreach (NetWorkInfo net in list)
+            foreach (NetWorkInfo net in networkList)
             {
                 Invoke((EventHandler)(delegate
                 {
                     this.netList.Items[i].SubItems[0].Text = net.name;
-                    this.netList.Items[i].SubItems[1].Text = net.ip;
+                    this.netList.Items[i].SubItems[1].Text = net.mac;
+                    this.netList.Items[i].SubItems[2].Text = net.ip;
                     if (net.speed <= 0)
                     {
                         this.netList.Items[i].ForeColor = Color.Red;
-                        this.netList.Items[i].SubItems[2].Text = "0 mbps";
+                        this.netList.Items[i].SubItems[3].Text = "0 mbps";
                     }
                     else
                     {
                         this.netList.Items[i].ForeColor = Color.Black;
-                        this.netList.Items[i].SubItems[2].Text = (net.speed / 1000 / 1000).ToString() + " mbps";
+                        this.netList.Items[i].SubItems[3].Text = (net.speed / 1000 / 1000).ToString() + " mbps";
                     }
-                    this.netList.Items[i].SubItems[3].Text = net.type;
+                    this.netList.Items[i].SubItems[4].Text = net.type;
+                    this.netList.Items[i].SubItems[5].Text = net.ping;
                 }));
                 i++;
             }
@@ -307,10 +308,9 @@ namespace OpenPCINFO
             }));
         }
 
-        private void Networkchanged(object sender, NetworkAvailabilityEventArgs e)
+        void AddressChangedCallback(object sender, EventArgs e)
         {
-            ArrayList net_info = PC.GetIPv4Address();
-            UpdateNetWorkInfo(net_info);
+            UpdateNetWorkInfo();
         }
 
         private void Pcinfo_FormClosed(object sender, FormClosedEventArgs e)
