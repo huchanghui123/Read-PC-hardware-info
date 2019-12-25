@@ -25,11 +25,44 @@ namespace OpenPCINFO
 
         private void Form_Load(object sender, EventArgs e)
         {
-            GetPcInfo();
-            GetCpuTemperatures();
-            GetMemoryInfo();
-            GetDiskInfo();
-            GetNetWorkInfo();
+            Thread thread0 = new Thread(delegate () {
+                Invoke((EventHandler)(delegate
+                {
+                    GetPcInfo();
+                }));
+            });
+            thread0.Start();
+            Thread thread1 = new Thread(delegate () {
+                Invoke((EventHandler)(delegate
+                {
+                    GetMemoryInfo();
+                }));
+            });
+            thread1.Start();
+            Thread thread2 = new Thread(delegate () {
+                Invoke((EventHandler)(delegate
+                {
+                    GetDiskInfo();
+                }));
+            });
+            thread2.Start();
+
+            Thread thread3 = new Thread(delegate() {
+                Invoke((EventHandler)(delegate
+                {
+                    GetNetWorkInfo();
+                }));
+                
+            });
+            thread3.Start();
+            Thread thread4 = new Thread(delegate () {
+                Invoke((EventHandler)(delegate
+                {
+                    GetCpuTemperatures();
+                }));
+            });
+            thread4.Start();
+
             timer1.Start();
         }
 
@@ -203,17 +236,21 @@ namespace OpenPCINFO
             this.netList.Columns.Add("IP地址", -2, HorizontalAlignment.Left);
             this.netList.Columns.Add("速度", -2, HorizontalAlignment.Left);
             this.netList.Columns.Add("类型", -2, HorizontalAlignment.Left);
+            this.netList.Columns.Add("PING百度", -2, HorizontalAlignment.Left);
 
             this.netList.Columns[0].Width = Convert.ToUInt16(0.4 * this.netList.Width);
             this.netList.Columns[1].Width = Convert.ToUInt16(0.25 * this.netList.Width);
             this.netList.Columns[2].Width = Convert.ToUInt16(0.22 * this.netList.Width);
-            this.netList.Columns[3].Width = Convert.ToUInt16(0.15 * this.netList.Width);
-            this.netList.Columns[4].Width = Convert.ToUInt16(0.15 * this.netList.Width);
+            this.netList.Columns[3].Width = Convert.ToUInt16(0.14 * this.netList.Width);
+            this.netList.Columns[4].Width = Convert.ToUInt16(0.13 * this.netList.Width);
+            this.netList.Columns[5].Width = Convert.ToUInt16(0.38 * this.netList.Width);
 
             this.netList.BeginUpdate();
             ArrayList net_info = PC.GetIPv4Address();
             foreach (NetWorkInfo net in net_info)
             {
+                //bool status = PC.Ping(net.ip);
+                //Console.WriteLine("ip status PING>>>" + status);
                 var net_item = new ListViewItem
                 {
                     Text = net.name
@@ -231,6 +268,7 @@ namespace OpenPCINFO
                     net_item.SubItems.Add((net.speed / 1000 / 1000).ToString() + " mbps");
                 }
                 net_item.SubItems.Add(net.type);
+                net_item.SubItems.Add(net.ping);
                 this.netList.Items.Add(net_item);
             }
             this.netList.EndUpdate();
@@ -281,5 +319,7 @@ namespace OpenPCINFO
             timer1.Enabled = false;
             cpuCelsius.Dispose();
         }
+
+
     }
 }

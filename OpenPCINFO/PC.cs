@@ -211,6 +211,7 @@ namespace OpenPCINFO
             String Mac = "";
             String NetType = "";
             long NetSpeed = 0;
+            string ping = "";
             NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in adapters)
             {
@@ -233,14 +234,47 @@ namespace OpenPCINFO
                         if (item.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
                             IPAddress = item.Address.ToString();
-                            NetWorkInfo netwotk = new NetWorkInfo(Name, IPAddress, Mac, NetSpeed, NetType);
+                            ping = Ping(IPAddress);
+                            NetWorkInfo netwotk = new NetWorkInfo(Name, IPAddress, Mac, NetSpeed, ping, NetType);
                             net_list.Add(netwotk);
+                            //bool status = PC.Ping(IPAddress);
                         }
                     }
                 }
             }
             return net_list;
         }
+
+        public static string Ping(string ip)
+        {
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo.FileName = "cmd.exe";
+            //关闭Shell的使用
+            p.StartInfo.UseShellExecute = false;
+            //重定向标准输入
+            p.StartInfo.RedirectStandardInput = true;
+            //重定向标准输出
+            p.StartInfo.RedirectStandardOutput = true;
+            //重定向错误输出
+            p.StartInfo.RedirectStandardError = true;
+            //设置不显示窗口
+            p.StartInfo.CreateNoWindow = true;
+            p.Start();
+            p.StandardInput.WriteLine(string.Format("ping -n 1 -S {0} www.baidu.com", ip));
+            p.StandardInput.WriteLine("exit");
+            
+            string strRst = p.StandardOutput.ReadToEnd();
+            String[] strs =strRst.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            //foreach (string str in strs)
+            //{
+            //    Console.WriteLine("ping>>>>>>"+str);
+            //}
+            //Console.WriteLine("ping>>>>>>" + strs[6]);
+            //System.IO.StringReader sr = new System.IO.StringReader(strRst);
+            //Console.WriteLine("ping>>>>>>>>>>>>>"+sr.ReadLine());
+            return strs[6];
+        }
+
 
     }
 }
